@@ -4,6 +4,8 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'war'
 
+def liferay_webapps = '/opt/liferay-ce-portal-7.0-ga5/tomcat-8.0.32/webapps'
+
 sourceCompatibility = 1.8
 
 repositories {
@@ -15,3 +17,12 @@ dependencies {
 
     compileOnly group: 'com.liferay.portal', name: 'com.liferay.portal.kernel', version: '2.42.0'
 }
+
+task deployToLiferay (dependsOn: war){
+    copy {
+        from "build/libs"
+        into liferay_webapps
+        include "*.war"
+    }
+}
+
